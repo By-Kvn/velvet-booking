@@ -101,8 +101,16 @@ export async function request<T>(
   return parsed.data
 }
 
-/** Message affichable à l'utilisateur, avec une piste pour s'en sortir. */
-export function getErrorMessage(error: unknown): string {
+type ErrorMessageOptions = {
+  /** Phrase de l'écran qui connaît la ressource. Le défaut reste neutre. */
+  notFound?: string
+}
+
+/**
+ * Message affichable à l'utilisateur, avec une piste pour s'en sortir.
+ * `NOT_FOUND` ne nomme pas la ressource : seul l'appelant sait si c'est une gare, un trajet ou une réservation.
+ */
+export function getErrorMessage(error: unknown, options?: ErrorMessageOptions): string {
   if (!(error instanceof ApiError)) return 'Une erreur inattendue est survenue. Réessayez.'
   switch (error.code) {
     case 'NETWORK':
@@ -110,7 +118,7 @@ export function getErrorMessage(error: unknown): string {
     case 'TIMEOUT':
       return 'Le service répond lentement. Réessayez dans quelques instants.'
     case 'NOT_FOUND':
-      return "Ce trajet n'existe plus. Relancez votre recherche."
+      return options?.notFound ?? "Cette information est introuvable. Revenez à l'accueil pour relancer votre recherche."
     case 'SOLD_OUT':
       return 'Plus de places disponibles dans cette classe. Choisissez un autre trajet ou une autre classe.'
     case 'VALIDATION':

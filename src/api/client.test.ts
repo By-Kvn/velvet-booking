@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 import { server } from '../mocks/node'
 import { setScenario } from '../mocks/scenario'
-import { ApiError, request } from './client'
+import { ApiError, getErrorMessage, request } from './client'
 import { getStations, getTrip, searchTrips } from './trips'
 
 describe('client API', () => {
@@ -44,6 +44,27 @@ describe('client API', () => {
   it('renvoie une 404 non réessayable pour un trajet inconnu', async () => {
     const error = await getTrip('inconnu').catch((e: unknown) => e)
     expect(error).toMatchObject({ code: 'NOT_FOUND', isRetryable: false })
+  })
+})
+
+describe('getErrorMessage', () => {
+  const notFound = new ApiError(404, 'NOT_FOUND', 'Trajet introuvable')
+
+  it('reste neutre pour une 404 dont on ne connaît pas la ressource', () => {
+    expect(getErrorMessage(notFound)).toBe("Cette information est introuvable. Revenez à l'accueil pour relancer votre recherche.")
+  })
+
+  it("laisse l'appelant préciser le message d'une 404", () => {
+    expect(getErrorMessage(notFound, { notFound: "Ce trajet n'existe plus. Relancez votre recherche." })).toBe(
+      "Ce trajet n'existe plus. Relancez votre recherche.",
+    )
+  })
+
+  it("n'applique le message de 404 qu'à ce code", () => {
+    const network = new ApiError(0, 'NETWORK', 'Impossible de joindre le serveur.')
+    expect(getErrorMessage(network, { notFound: 'ignoré' })).toBe(
+      'Connexion impossible. Vérifiez votre réseau puis réessayez.',
+    )
   })
 })
 
