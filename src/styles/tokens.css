@@ -1,0 +1,62 @@
+/*
+ * Tokens Velvet : la seule source des valeurs visuelles.
+ * Les composants n'utilisent jamais de valeur en dur.
+ */
+:root {
+  /* Couleurs de marque */
+  --color-velvet: #4a1d3f;
+  --color-velvet-strong: #34122c;
+  --color-velvet-soft: #f3ebf1;
+
+  /* Neutres (froids, pas de crème) */
+  --color-ink: #1c1a24;
+  --color-muted: #5e5a68; /* 6.6:1 sur blanc */
+  --color-line: #d9d6de;
+  --color-line-strong: #8f8a99; /* bordures de champs : 3:1 minimum */
+  --color-surface: #f5f4f7;
+  --color-paper: #ffffff;
+
+  /* États */
+  --color-focus: #1d5fd1;
+  --color-error: #b3261e;
+  --color-error-bg: #fcedec;
+  --color-success: #1e6b45;
+  --color-success-bg: #e8f4ec;
+  --color-warning: #7a4f00;
+  --color-warning-bg: #fff4db;
+  --color-info: #1d4f91;
+  --color-info-bg: #eaf1fb;
+
+  /* Typographie : échelle modulaire 1.25 */
+  --font-sans: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5625rem;
+  --text-2xl: 1.953rem;
+  --leading-tight: 1.2;
+  --leading-body: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* Espacements : base 4px */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* Rayons : différenciés selon la hiérarchie */
+  --radius-sm: 4px; /* champs */
+  --radius-md: 8px; /* boutons, alertes */
+  --radius-lg: 16px; /* conteneurs */
+
+  /* Cibles tactiles : 44px minimum (WCAG 2.5.5) */
+  --touch-target: 2.75rem;
+
+  --duration-fast: 120ms;
+  --focus-ring: 0 0 0 3px var(--color-paper), 0 0 0 5px var(--color-focus);
+}
