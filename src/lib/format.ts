@@ -42,6 +42,11 @@ export function todayInParis(now: Date = new Date()): string {
   return isoDateFormatter.format(now)
 }
 
+/** Jour de départ à Paris (AAAA-MM-JJ) d'un horaire ISO : un 23h30 UTC est déjà le lendemain à Paris. */
+export function parisDateOf(isoDateTime: string): string {
+  return isoDateFormatter.format(new Date(isoDateTime))
+}
+
 export function formatPassengers(count: number): string {
   return count > 1 ? `${count} voyageurs` : '1 voyageur'
 }

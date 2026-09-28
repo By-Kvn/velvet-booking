@@ -27,3 +27,13 @@
 - **Tests sur l'application complète** (`renderRoute`) : mêmes routes et même layout qu'en production, API simulée par MSW. On teste ce que voit l'utilisateur, pas l'implémentation.
 - **Bannière « Mode démo »** dès qu'un scénario de panne est actif : mémorisé en session, il pourrait passer pour un vrai bug. Un bouton ramène au fonctionnement normal.
 - **Chargement qui parle** : après un premier échec, « Le réseau est lent. Nouvelle tentative en cours. » Avec un timeout de 8 s et 2 relances, un spinner muet pourrait tourner 30 s, exactement le cas d'un voyageur en tunnel.
+
+## Jour 3
+
+- **Double réservation impossible** : bouton en `loading` (reste focusable, `aria-busy`), garde `isPending` dans `onSubmit`, aucune relance automatique de la mutation. Testé avec un double clic + Entrée sur réponse lente : une seule requête POST.
+- **Timeout à l'achat ≠ échec** : la réservation a pu être enregistrée côté serveur. Le message invite à vérifier ses e-mails avant de réessayer, au lieu d'un « Réessayer » qui risquerait un doublon. En production : clé d'idempotence envoyée avec la requête.
+- **409 `SOLD_OUT`** : message clair + lien vers les résultats reconstruit depuis le trajet (gares, date à Paris, voyageurs). La recherche n'est pas perdue.
+- **`navigate(..., { replace: true })` après l'achat** : le retour arrière ne ramène pas sur un formulaire déjà soumis.
+- **Billets en `localStorage`, revalidés par Zod à la lecture, billet par billet** : un billet corrompu ou d'une ancienne version est écarté sans faire disparaître les autres. Clé versionnée (`velvet:tickets:v1`). `useSyncExternalStore` + événement `storage` : un achat dans un autre onglet apparaît partout.
+- **Classe : radios natifs dans un `fieldset`** plutôt que des cartes cliquables custom : groupe annoncé, flèches clavier gratuites. La classe demandée est présélectionnée, sinon la première disponible.
+- **Paramètres d'URL de réservation bricolés** (`?passengers=99`) : repli sûr avec `.catch()` de Zod plutôt qu'une page d'erreur.

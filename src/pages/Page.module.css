@@ -17,3 +17,21 @@
   background: var(--color-paper);
   border-radius: var(--radius-lg);
 }
+
+.card p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

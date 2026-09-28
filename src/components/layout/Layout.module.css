@@ -32,6 +32,29 @@
   padding: var(--space-3) 0;
 }
 
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-2);
+  color: var(--color-paper);
+  font-weight: var(--weight-semibold);
+  text-underline-offset: 4px;
+}
+
+/* Page courante : soulignement épais, pas seulement une couleur */
+.navLink[aria-current='page'] {
+  color: var(--color-accent);
+  text-decoration-thickness: 3px;
+}
+
 .wordmark {
   display: inline-flex;
   align-items: center;

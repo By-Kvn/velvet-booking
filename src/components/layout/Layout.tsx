@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { DemoBanner } from './DemoBanner'
 import { DemoScenarioSelect } from './DemoScenarioSelect'
 import styles from './Layout.module.css'
@@ -24,10 +24,15 @@ export function Layout() {
         Aller au contenu
       </a>
       <header className={styles.header}>
-        <div className={styles.inner}>
+        <div className={`${styles.inner} ${styles.headerInner}`}>
           <Link to="/" className={styles.wordmark}>
             Velvet<span className="sr-only">, accueil</span>
           </Link>
+          <nav aria-label="Principale">
+            <NavLink to="/billets" className={styles.navLink}>
+              Mes billets
+            </NavLink>
+          </nav>
         </div>
       </header>
 
