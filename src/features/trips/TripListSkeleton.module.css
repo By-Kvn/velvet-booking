@@ -1,0 +1,47 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--color-paper);
+  border-radius: var(--radius-lg);
+}
+
+.bar {
+  display: block;
+  width: 40%;
+  height: var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-line);
+  animation: pulse var(--duration-pulse) ease-in-out infinite alternate;
+}
+
+.wide {
+  width: 60%;
+  height: var(--space-6);
+}
+
+.block {
+  width: 100%;
+  height: var(--space-12);
+}
+
+@keyframes pulse {
+  to {
+    opacity: 0.4;
+  }
+}

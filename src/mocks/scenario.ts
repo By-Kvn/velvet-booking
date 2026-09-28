@@ -16,9 +16,16 @@ export type Scenario = keyof typeof SCENARIOS
 
 const STORAGE_KEY = 'velvet:scenario'
 let current: Scenario = 'default'
+const listeners = new Set<() => void>()
 
-function isScenario(value: unknown): value is Scenario {
+export function isScenario(value: unknown): value is Scenario {
   return typeof value === 'string' && value in SCENARIOS
+}
+
+/** Abonnement pour l'interface (bannière de démo), compatible useSyncExternalStore. */
+export function subscribeScenario(listener: () => void): () => void {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
 }
 
 export function getScenario(): Scenario {
@@ -27,6 +34,7 @@ export function getScenario(): Scenario {
 
 export function setScenario(scenario: Scenario) {
   current = scenario
+  listeners.forEach((listener) => listener())
   try {
     sessionStorage.setItem(STORAGE_KEY, scenario)
   } catch {

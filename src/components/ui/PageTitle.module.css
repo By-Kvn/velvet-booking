@@ -1,0 +1,8 @@
+.title {
+  font-size: var(--text-2xl);
+}
+
+/* Focus déplacé par programme : pas d'anneau sur un élément non interactif */
+.title:focus {
+  box-shadow: none;
+}

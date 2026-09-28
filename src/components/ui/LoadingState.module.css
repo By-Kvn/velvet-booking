@@ -1,0 +1,19 @@
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-velvet);
+}
+
+.loading p {
+  margin: 0;
+}
+
+.label {
+  font-weight: var(--weight-medium);
+}
+
+.retry {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}

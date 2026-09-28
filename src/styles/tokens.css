@@ -62,9 +62,13 @@
   --radius-md: 0; /* boutons, alertes */
   --radius-lg: 10px 0 10px 10px; /* conteneurs : coin asymétrique des cartes du site */
 
+  /* Mise en page */
+  --content-width: 48rem;
+
   /* Cibles tactiles : 44px minimum (WCAG 2.5.5) */
   --touch-target: 2.75rem;
 
   --duration-fast: 120ms;
+  --duration-pulse: 1200ms;
   --focus-ring: 0 0 0 3px var(--color-paper), 0 0 0 5px var(--color-focus);
 }
