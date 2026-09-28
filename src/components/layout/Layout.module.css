@@ -103,3 +103,24 @@
 .scenarioSelect {
   flex: 0 1 20rem;
 }
+
+.network {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+}
+
+.offline {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.offline a {
+  color: inherit;
+  font-weight: var(--weight-semibold);
+}
+
+.online {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}

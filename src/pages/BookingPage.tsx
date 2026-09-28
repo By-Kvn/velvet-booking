@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { ApiError, getErrorMessage } from '../api/client'
 import { getTrip } from '../api/trips'
+import { OfflineNotice } from '../components/OfflineNotice'
 import { Alert, Button, ButtonLink, LoadingState, PageTitle } from '../components/ui'
 import { BookingForm } from '../features/booking/BookingForm'
 import { parseBookingParams } from '../features/booking/bookingParams'
@@ -25,7 +26,10 @@ export function BookingPage() {
     <div className={styles.stack}>
       <PageTitle>Réserver ce trajet</PageTitle>
 
-      {trip.isPending && <LoadingState label="Chargement du trajet" retrying={trip.failureCount > 0} />}
+      {trip.isPending && trip.fetchStatus === 'paused' && <OfflineNotice title="Ce trajet ne peut pas être chargé hors ligne" />}
+      {trip.isPending && trip.fetchStatus !== 'paused' && (
+        <LoadingState label="Chargement du trajet" retrying={trip.failureCount > 0} />
+      )}
 
       {trip.isError && (
         <Alert

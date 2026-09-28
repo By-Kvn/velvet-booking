@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { getErrorMessage } from '../api/client'
 import { searchTrips } from '../api/trips'
+import { OfflineNotice } from '../components/OfflineNotice'
 import { Alert, Button, ButtonLink, PageTitle } from '../components/ui'
 import { parseSearchCriteria, toSearchParams, type SearchCriteria } from '../features/search/searchCriteria'
 import { stationName, useStations } from '../features/stations/useStations'
@@ -65,7 +66,8 @@ function Results({ criteria }: { criteria: SearchCriteria }) {
         </div>
       </header>
 
-      {trips.isPending && <TripListSkeleton retrying={trips.failureCount > 0} />}
+      {trips.isPending && trips.fetchStatus === 'paused' && <OfflineNotice title="Les trains ne peuvent pas être chargés hors ligne" />}
+      {trips.isPending && trips.fetchStatus !== 'paused' && <TripListSkeleton retrying={trips.failureCount > 0} />}
 
       {trips.isError && (
         <Alert

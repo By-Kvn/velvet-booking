@@ -24,9 +24,11 @@ export function Button({
     .join(' ')
 
   function handleClick(event: MouseEvent<HTMLButtonElement>) {
-    // Pendant le chargement, on bloque l'action (et la soumission du formulaire)
-    // sans utiliser disabled : le bouton garde le focus clavier.
-    if (loading) {
+    // Pendant le chargement ou si l'action est indisponible (hors ligne), on bloque l'action
+    // et la soumission du formulaire sans utiliser disabled : le bouton garde le focus clavier
+    // et reste annoncé, avec son explication.
+    const ariaDisabled = rest['aria-disabled']
+    if (loading || ariaDisabled === true || ariaDisabled === 'true') {
       event.preventDefault()
       return
     }

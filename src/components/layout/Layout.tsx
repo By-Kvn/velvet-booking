@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { DemoBanner } from './DemoBanner'
 import { DemoScenarioSelect } from './DemoScenarioSelect'
+import { NetworkBanner } from './NetworkBanner'
 import styles from './Layout.module.css'
 
 export function Layout() {
@@ -35,6 +36,7 @@ export function Layout() {
           </nav>
         </div>
       </header>
+      <NetworkBanner />
 
       <main id="contenu" className={styles.main}>
         <div className={styles.banner}>

@@ -37,3 +37,13 @@
 - **Billets en `localStorage`, revalidés par Zod à la lecture, billet par billet** : un billet corrompu ou d'une ancienne version est écarté sans faire disparaître les autres. Clé versionnée (`velvet:tickets:v1`). `useSyncExternalStore` + événement `storage` : un achat dans un autre onglet apparaît partout.
 - **Classe : radios natifs dans un `fieldset`** plutôt que des cartes cliquables custom : groupe annoncé, flèches clavier gratuites. La classe demandée est présélectionnée, sinon la première disponible.
 - **Paramètres d'URL de réservation bricolés** (`?passengers=99`) : repli sûr avec `.catch()` de Zod plutôt qu'une page d'erreur.
+
+## Jour 4
+
+- **API simulée dans la page plutôt que par le service worker de MSW** : un seul service worker peut contrôler `/`, et il faut celui de la PWA (cache hors ligne). `fetch` est intercepté et résolu avec `getResponse(handlers)` de MSW : mêmes handlers que les tests. Bonus : plus de piège Cmd + Shift + R, et le mode « Offline » des DevTools se comporte comme une vraie API injoignable.
+- **L'interception respecte l'annulation** (`AbortSignal`) : sans ça, le timeout de 8 s du client ne couperait pas une réponse simulée lente.
+- **Réseau : une seule source de vérité, `onlineManager` de React Query**, initialisé avec `navigator.onLine` au démarrage (une PWA peut s'ouvrir sans réseau). L'interface et les requêtes en pause ne peuvent pas se contredire.
+- **Requête en pause hors ligne ⇒ message explicite** (`fetchStatus === 'paused'`) au lieu d'un squelette infini ; elle reprend seule au retour du réseau.
+- **Achat bloqué hors ligne dans `onSubmit`** : sinon React Query mettrait la mutation en pause et l'enverrait au retour du réseau, à l'insu du voyageur. Bouton `aria-disabled` + explication reliée par `aria-describedby`, saisie conservée.
+- **Bannière réseau dans une région live toujours présente** : annonce fiable de la perte et du retour (« Connexion rétablie. »).
+- **PWA (vite-plugin-pwa / Workbox)** : coque et polices précachées, `navigateFallback` pour que n'importe quelle URL (`/billets`) s'ouvre sans réseau. Dépendance justifiée : écrire et versionner un service worker de precache à la main est une source classique de bugs de cache. Icônes PNG générées par script, sans dépendance d'image.

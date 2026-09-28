@@ -6,6 +6,7 @@ import { createBooking } from '../../api/bookings'
 import { ApiError, getErrorMessage } from '../../api/client'
 import type { FareClass, Trip } from '../../api/types'
 import { Alert, Button, ButtonLink, TextField } from '../../components/ui'
+import { useOnlineStatus } from '../../hooks/useOnlineStatus'
 import { formatPrice, parisDateOf } from '../../lib/format'
 import { toSearchParams } from '../search/searchCriteria'
 import { saveTicket } from '../tickets/ticketStorage'
@@ -22,6 +23,7 @@ type BookingFormProps = {
 
 export function BookingForm({ trip, passengers, preferredClass }: BookingFormProps) {
   const navigate = useNavigate()
+  const online = useOnlineStatus()
   const bookableClasses = trip.fares.filter((fare) => {
     const { status } = getFareAvailability(fare, passengers)
     return status === 'available' || status === 'low'
@@ -66,7 +68,8 @@ export function BookingForm({ trip, passengers, preferredClass }: BookingFormPro
 
   function onSubmit(values: BookingFormValues) {
     // Double protection contre la double réservation : bouton en chargement + garde ici.
-    if (booking.isPending) return
+    // Hors ligne, React Query mettrait l'achat en pause puis l'enverrait au retour du réseau, à l'insu du voyageur.
+    if (booking.isPending || !online) return
     booking.mutate({ tripId: trip.id, ...values })
   }
 
@@ -117,9 +120,20 @@ export function BookingForm({ trip, passengers, preferredClass }: BookingFormPro
         <span>Total</span>
         <strong>{total}</strong>
       </div>
-      <Button type="submit" loading={booking.isPending} fullWidth>
+      <Button
+        type="submit"
+        loading={booking.isPending}
+        fullWidth
+        aria-disabled={!online || undefined}
+        aria-describedby={online ? undefined : 'booking-offline'}
+      >
         Confirmer la réservation
       </Button>
+      {!online && (
+        <p id="booking-offline" className={styles.offlineHint}>
+          Connexion requise pour réserver. Vos informations restent saisies.
+        </p>
+      )}
     </form>
   )
 }

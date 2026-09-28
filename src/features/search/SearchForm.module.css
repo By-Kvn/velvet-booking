@@ -50,3 +50,9 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.offlineHint {
+  margin: 0;
+  color: var(--color-muted);
+  text-align: center;
+}

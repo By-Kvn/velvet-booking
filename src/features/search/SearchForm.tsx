@@ -3,7 +3,9 @@ import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../api/client'
+import { OfflineNotice } from '../../components/OfflineNotice'
 import { Alert, Button, LoadingState, Select, TextField } from '../../components/ui'
+import { useOnlineStatus } from '../../hooks/useOnlineStatus'
 import { formatPassengers, todayInParis } from '../../lib/format'
 import { useStations } from '../stations/useStations'
 import { MAX_PASSENGERS, toSearchParams } from './searchCriteria'
@@ -25,6 +27,7 @@ export function SearchForm({ defaultValues }: SearchFormProps) {
   const today = todayInParis()
   const schema = useMemo(() => createSearchFormSchema(today), [today])
   const [announcement, setAnnouncement] = useState('')
+  const online = useOnlineStatus()
 
   const {
     register,
@@ -48,6 +51,11 @@ export function SearchForm({ defaultValues }: SearchFormProps) {
   function onSubmit(values: SearchFormValues) {
     const params = toSearchParams({ ...values, passengers: Number(values.passengers) })
     navigate(`/trajets?${params}`)
+  }
+
+  // Requête en pause faute de réseau (React Query) : on l'explique au lieu d'un chargement sans fin.
+  if (stations.isPending && stations.fetchStatus === 'paused') {
+    return <OfflineNotice title="La recherche de trains nécessite une connexion" />
   }
 
   if (stations.isPending) return <LoadingState label="Chargement des gares" retrying={stations.failureCount > 0} />
@@ -98,9 +106,14 @@ export function SearchForm({ defaultValues }: SearchFormProps) {
         <Select label="Voyageurs" options={PASSENGER_OPTIONS} error={errors.passengers?.message} {...register('passengers')} />
       </div>
 
-      <Button type="submit" fullWidth>
+      <Button type="submit" fullWidth aria-disabled={!online || undefined} aria-describedby={online ? undefined : 'search-offline'}>
         Rechercher les trains
       </Button>
+      {!online && (
+        <p id="search-offline" className={styles.offlineHint}>
+          Connexion requise pour rechercher des trains.
+        </p>
+      )}
 
       <p role="status" className="sr-only">
         {announcement}
