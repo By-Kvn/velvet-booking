@@ -1,6 +1,5 @@
-@import '@fontsource/public-sans/400.css';
-@import '@fontsource/public-sans/500.css';
-@import '@fontsource/public-sans/700.css';
+@import '@fontsource-variable/work-sans/wght.css';
+@import '@fontsource-variable/archivo/wdth.css';
 @import './tokens.css';
 
 *,
@@ -22,6 +21,9 @@ body {
 h1,
 h2,
 h3 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-stretch: var(--stretch-display);
   line-height: var(--leading-tight);
   margin: 0;
 }

@@ -3,16 +3,19 @@
  * Les composants n'utilisent jamais de valeur en dur.
  */
 :root {
-  /* Couleurs de marque */
-  --color-velvet: #4a1d3f;
-  --color-velvet-strong: #34122c;
-  --color-velvet-soft: #f3ebf1;
+  /* Couleurs de marque (palette velvet.fr) */
+  --color-velvet: #003e40; /* vert : 11.9:1 sur blanc */
+  --color-velvet-strong: #002a2b;
+  --color-velvet-soft: #f9e3fe;
+  --color-accent: #efaafe; /* rose : en fond uniquement, jamais en texte sur blanc (1.8:1) */
+  --color-accent-hover: #f7d4fe; /* éclaircissement du survol de velvet.fr */
+  --color-on-accent: #003e40; /* vert sur rose : 6.7:1 */
 
   /* Neutres (froids, pas de crème) */
-  --color-ink: #1c1a24;
-  --color-muted: #5e5a68; /* 6.6:1 sur blanc */
-  --color-line: #d9d6de;
-  --color-line-strong: #8f8a99; /* bordures de champs : 3:1 minimum */
+  --color-ink: #003e40; /* le texte courant du site est vert */
+  --color-muted: #4f6364; /* 6.4:1 sur blanc */
+  --color-line: #d5dede;
+  --color-line-strong: #7d8f90; /* bordures de champs : 3:1 minimum */
   --color-surface: #f5f4f7;
   --color-paper: #ffffff;
 
@@ -28,17 +31,22 @@
   --color-info-bg: #eaf1fb;
 
   /* Typographie : échelle modulaire 1.25 */
-  --font-sans: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Work Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Substitut libre de RocGrotesk Black (police commerciale du site) */
+  --font-display: 'Archivo Variable', var(--font-sans);
+  --stretch-display: 125%;
   --text-sm: 0.875rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;
   --text-xl: 1.5625rem;
   --text-2xl: 1.953rem;
-  --leading-tight: 1.2;
+  --leading-tight: 1.1;
   --leading-body: 1.5;
   --weight-regular: 400;
   --weight-medium: 500;
+  --weight-semibold: 600;
   --weight-bold: 700;
+  --weight-display: 800;
 
   /* Espacements : base 4px */
   --space-1: 0.25rem;
@@ -49,10 +57,10 @@
   --space-8: 2rem;
   --space-12: 3rem;
 
-  /* Rayons : différenciés selon la hiérarchie */
+  /* Rayons : angles droits comme sur velvet.fr */
   --radius-sm: 4px; /* champs */
-  --radius-md: 8px; /* boutons, alertes */
-  --radius-lg: 16px; /* conteneurs */
+  --radius-md: 0; /* boutons, alertes */
+  --radius-lg: 10px 0 10px 10px; /* conteneurs : coin asymétrique des cartes du site */
 
   /* Cibles tactiles : 44px minimum (WCAG 2.5.5) */
   --touch-target: 2.75rem;

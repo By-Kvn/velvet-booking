@@ -8,18 +8,18 @@
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   font: inherit;
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
   cursor: pointer;
   transition: background-color var(--duration-fast) ease-out, border-color var(--duration-fast) ease-out;
 }
 
 .primary {
-  background: var(--color-velvet);
-  color: var(--color-paper);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 .primary:hover {
-  background: var(--color-velvet-strong);
+  background: var(--color-accent-hover);
 }
 
 .secondary {
@@ -29,7 +29,7 @@
 }
 
 .secondary:hover {
-  background: var(--color-velvet-soft);
+  background: var(--color-accent);
 }
 
 .ghost {
