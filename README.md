@@ -4,9 +4,9 @@ Mini application de réservation de billets de train dans l'univers Velvet : rec
 Pensée pour un voyageur sur le quai ou dans le train : mobile d'abord, réseau instable, accessible au clavier et au lecteur d'écran.
 React 19 + TypeScript strict, API simulée, testée de l'unitaire à l'end-to-end.
 
-> Projet de démonstration non officiel, réalisé dans le cadre d'une candidature. Aucun lien avec Velvet ; ni logo ni photo officiels.
+> Projet de démonstration non officiel, réalisé dans le cadre de ma candidature chez Velvet. Aucun lien avec Velvet ni logo ni photo officiels.
 
-**Démo :** _lien Vercel à ajouter_ · **Code :** https://github.com/By-Kvn/velvet-booking
+**Démo :** https://velvet-booking.vercel.app · **Code :** https://github.com/By-Kvn/velvet-booking
 
 <p>
   <img src="docs/1-recherche.png" alt="Recherche de trajet sur mobile" width="200" />
