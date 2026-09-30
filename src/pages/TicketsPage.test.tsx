@@ -1,4 +1,5 @@
-import { screen } from '@testing-library/react'
+import { onlineManager } from '@tanstack/react-query'
+import { act, cleanup, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { TICKETS_STORAGE_KEY } from '../features/tickets/ticketStorage'
 import { findTripById } from '../mocks/data/trips'
@@ -50,5 +51,19 @@ describe('mes billets', () => {
   it('explique une confirmation absente de l’appareil', async () => {
     renderRoute('/confirmation/inconnue')
     expect(await screen.findByRole('heading', { name: 'Réservation introuvable' })).toBeInTheDocument()
+  })
+})
+
+describe('mes billets hors ligne', () => {
+  it('affiche les noms de gares mémorisés sur l’appareil, sans réseau', async () => {
+    // Une première visite en ligne mémorise la liste des gares.
+    renderRoute('/')
+    await screen.findByLabelText('Départ')
+    cleanup()
+
+    localStorage.setItem(TICKETS_STORAGE_KEY, JSON.stringify([storedBooking('ok', 'PMO_BSJ_2030-06-12_1045', 'OFF234')]))
+    act(() => onlineManager.setOnline(false))
+    renderRoute('/billets')
+    expect(await screen.findByText('Paris Montparnasse → Bordeaux Saint-Jean')).toBeInTheDocument()
   })
 })

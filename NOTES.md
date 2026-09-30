@@ -47,3 +47,15 @@
 - **Achat bloqué hors ligne dans `onSubmit`** : sinon React Query mettrait la mutation en pause et l'enverrait au retour du réseau, à l'insu du voyageur. Bouton `aria-disabled` + explication reliée par `aria-describedby`, saisie conservée.
 - **Bannière réseau dans une région live toujours présente** : annonce fiable de la perte et du retour (« Connexion rétablie. »).
 - **PWA (vite-plugin-pwa / Workbox)** : coque et polices précachées, `navigateFallback` pour que n'importe quelle URL (`/billets`) s'ouvre sans réseau. Dépendance justifiée : écrire et versionner un service worker de precache à la main est une source classique de bugs de cache. Icônes PNG générées par script, sans dépendance d'image.
+
+## Jour 5
+
+- **E2E sur le build de production** (`vite preview`) : même bundle, même service worker, même API simulée que la démo en ligne. Deux profils : mobile (Pixel 7) et desktop.
+- **Audit axe (WCAG 2.1 AA) sur chaque page**, y compris formulaire en erreur et bannière hors ligne : zéro violation exigée.
+- **Le vrai hors ligne est testé** (`context.setOffline`) : rechargement complet sans réseau, coque servie par le service worker, billet lu dans le stockage local.
+- **Bugs trouvés par l'e2e et corrigés** :
+  - Changer de scénario de démo sur la page de réservation effaçait le formulaire (`resetQueries` démontait l'écran) : remplacé par `cancelQueries` puis `invalidateQueries`.
+  - Hors ligne, un billet affichait « PMO → BSJ » : la liste des gares est maintenant mémorisée sur l'appareil, et sa requête n'est plus annulée quand on change de page.
+- **Chrome local en e2e, Chromium en CI** : pas de téléchargement de navigateur sur le poste de développement.
+- **CI GitHub Actions** : typecheck, lint, tests, build, puis e2e ; version de Node lue dans `.nvmrc` (une seule source de vérité). Rapport Playwright en artefact en cas d'échec.
+- **Vercel** : réécriture SPA (toute route sert `index.html`), `sw.js` jamais mis en cache par le CDN (sinon une mise à jour de l'app pourrait rester bloquée), assets versionnés en cache long.
